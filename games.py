@@ -15,7 +15,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 where_from = os.getenv("where_from")
 
-othello_playing_list = []
+othello_member_list = []
 ox_member_list = []
 
 def unexpected_error():
@@ -62,33 +62,42 @@ async def on_message(message):
             if not message.author.bot:
                 await message.channel.send(where_from)
 
+        if message.guild is None:
+            for i in range(5):
+                await message.channel.send("DMに来るんじゃねぇ馬鹿野郎！")
+            return
+
+        if message.guild.id == 585998962050203672:
+            if not message.channel.id == 691901316133290035:
+                return
+
         if message.content == "/othello":
-            if len(othello_playing_list) == 0:
-                othello_playing_list.append(message.author.id)
+            if len(othello_member_list) == 0:
+                othello_member_list.append(message.author.id)
                 await message.channel.send("他の参加者を待っています・・・")
-            elif len(othello_playing_list) == 2:
+            elif len(othello_member_list) == 2:
                 await message.channel.send("現在勝負中です。しばらくお待ちください。・・・")
                 return
-            elif len(othello_playing_list) == 1:
-                if message.author.id == othello_playing_list[0]:
+            elif len(othello_member_list) == 1:
+                if message.author.id == othello_member_list[0]:
                     await message.channel.send("あなたは既に参加しています")
                     return
-                othello_playing_list.append(message.author.id)
+                othello_member_list.append(message.author.id)
                 await message.channel.send("勝負を開始します!")
-                await othello_match(message, client3, othello_playing_list)
+                await othello_match(message, client3, othello_member_list)
 
         elif message.content == "/othello_cancel":
             try:
-                if not message.author.id in othello_playing_list:
+                if not message.author.id in othello_member_list:
                     await message.channel.send("あなたじゃないです")
                     return
             except IndexError:
                 await message.channel.send("誰もプレイしてません")
                 return
-            if len(othello_playing_list) == 2:
+            if len(othello_member_list) == 2:
                 await message.channel.send("プレイ中は離脱できません")
                 return
-            othello_playing_list.clear()
+            othello_member_list.clear()
             await message.channel.send("キャンセルしました")
 
         elif message.content == "/ox_cancel":
@@ -172,7 +181,7 @@ def create_pic_othello(match):
     othello.save("othello.png")
 
 
-async def othello_match(message, client3, othello_playing_list):
+async def othello_match(message, client3, othello_member_list):
     match = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -186,12 +195,12 @@ async def othello_match(message, client3, othello_playing_list):
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ]
     index = random.choice([0, 1])
-    sente = client3.get_user(othello_playing_list[index])
+    sente = client3.get_user(othello_member_list[index])
     if index == 0:
         index = 1
     else:
         index = 0
-    gote = client3.get_user(othello_playing_list[index])
+    gote = client3.get_user(othello_member_list[index])
     await message.channel.send(f"先手は{sente.name}さん\n後手は{gote.name}さんです")
 
     player_list = []
@@ -376,7 +385,7 @@ async def othello_match(message, client3, othello_playing_list):
 
         n += 1
 
-    othello_playing_list.clear()
+    othello_member_list.clear()
 
 
 def create_pic_ox(match, size):
