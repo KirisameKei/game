@@ -87,13 +87,10 @@ async def on_message(message):
                 await othello_match(message, client3, othello_member_list)
 
         elif message.content == "/othello_cancel":
-            try:
-                if not message.author.id in othello_member_list:
-                    await message.channel.send("あなたじゃないです")
-                    return
-            except IndexError:
-                await message.channel.send("誰もプレイしてません")
+            if not message.author.id in othello_member_list:
+                await message.channel.send("あなたは参加していません")
                 return
+
             if len(othello_member_list) == 2:
                 await message.channel.send("プレイ中は離脱できません")
                 return
@@ -102,10 +99,10 @@ async def on_message(message):
 
         elif message.content == "/ox_cancel":
             if not message.author.id in ox_member_list:
-                await message.channel.send("あなたじゃないです")
+                await message.channel.send("あなたは参加していません")
                 return
             if len(ox_member_list) == 3:
-                await message.channel.send("勝負中は抜けられません")
+                await message.channel.send("プレイ中は離脱できません")
                 return
             ox_member_list.clear()
             await message.channel.send("キャンセルしました")
