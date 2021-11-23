@@ -9,6 +9,7 @@ from discord.ext import tasks
 
 import othello
 import ox
+import puzzle15
 import syogi
 
 intents = discord.Intents.all()
@@ -18,8 +19,9 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 where_from = os.getenv("where_from")
 
 about_ox = [] #[int, datetime.datetime, discord.Member, discord.Member]
-about_othello = []
-about_syogi = []
+about_othello = [] #[int, datetime.datetime, discord.Member, discord.Member]
+about_syogi = [] #[datetime.datetime, discord.Member, discord.Member]
+about_puzzle15 = [] #[discord.Member]
 
 def unexpected_error():
     """
@@ -62,6 +64,7 @@ async def on_message(message):
             return
 
         if not message.channel.id == 691901316133290035: #ミニゲーム
+        #if not message.channel.id == 597978849476870153: #3組
             return
 
         if message.content.startswith("/ox"):
@@ -70,6 +73,8 @@ async def on_message(message):
             await start_othello(message)
         elif message.content == "/syogi":
             await start_syogi(message)
+        elif message.content == "/puzzle15":
+            await start_puzzle15(message)
         elif message.content == "/cancel":
             await cancel(message)
 
@@ -82,7 +87,7 @@ async def start_ox(message):
         await message.channel.send("現在プレイ中です。しばらくお待ちください。")
         return
 
-    if message.author in about_ox or message.author in about_othello or message.author in about_syogi:
+    if message.author in about_ox or message.author in about_othello or message.author in about_syogi or message.author in about_puzzle15:
         await message.channel.send("あなたは別のゲームに参加しているか既に参加しているため参加できません")
         return
 
@@ -117,7 +122,7 @@ async def start_othello(message):
         await message.channel.send("現在プレイ中です。しばらくお待ちください。")
         return
 
-    if message.author in about_ox or message.author in about_othello or message.author in about_syogi:
+    if message.author in about_ox or message.author in about_othello or message.author in about_syogi or message.author in about_puzzle15:
         await message.channel.send("あなたは別のゲームに参加しているか既に参加しているため参加できません")
         return
 
@@ -156,7 +161,7 @@ async def start_syogi(message):
         await message.channel.send("現在プレイ中です。しばらくお待ちください。")
         return
 
-    if message.author in about_ox or message.author in about_othello or message.author in about_syogi:
+    if message.author in about_ox or message.author in about_othello or message.author in about_syogi or message.author in about_puzzle15:
         await message.channel.send("あなたは別のゲームに参加しているか既に参加しているため参加できません")
         return
 
@@ -169,6 +174,19 @@ async def start_syogi(message):
         about_syogi.append(datetime.datetime.now())
         about_syogi.append(message.author)
         await message.channel.send("他の参加者を待っています・・・")
+
+
+async def start_puzzle15(message):
+    if message.author in about_ox or message.author in about_othello or message.author in about_syogi or message.author in about_puzzle15:
+        await message.channel.send("あなたは別のゲームに参加しているか既に参加しているため参加できません")
+        return
+
+    if len(about_puzzle15) == 1:
+        await message.channel.send("現在プレイ中です。しばらくお待ちください。")
+        return 
+
+    about_puzzle15.append(message.author)
+    await puzzle15.play_puzzle15(client3, message, about_puzzle15)
 
 
 async def cancel(message):
@@ -213,9 +231,9 @@ async def on_ready():
 async def loop():
     await client3.wait_until_ready()
 
-    before_30min = datetime.datetime.now() - datetime.timedelta(minutes=3)
+    before_30min = datetime.datetime.now() - datetime.timedelta(minutes=30)
     ch = client3.get_channel(691901316133290035) #ミニゲーム
-    ch = client3.get_channel(597978849476870153) #3組
+    #ch = client3.get_channel(597978849476870153) #3組
     if len(about_ox) == 3:
         if about_ox[1] <= before_30min:
             member = about_ox[2]
