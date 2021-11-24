@@ -29,8 +29,6 @@ def create_pic_puzzle15(match):
     pict.save("./puzzle15.png")
 
 async def play_puzzle15(client3, message, about_puzzle15):
-    figure = random.sample(list(range(16)), k=16)
-    match = []
     complete = [
         [1, 5, 9, 13],
         [2, 6, 10, 14],
@@ -40,14 +38,15 @@ async def play_puzzle15(client3, message, about_puzzle15):
 
     check_list = []
     check_complete_list = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 0]
-    #match =      [3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0]
     change_counter = 0
     while True:
         #生成
+        figure = random.sample(list(range(16)), k=16)
+        match = []
         counter = 0
-        for i in range(4):
+        for n in range(4):
             line = []
-            for j in range(4):
+            for m in range(4):
                 line.append(figure[counter])
                 counter += 1
             match.append(line)
@@ -56,8 +55,6 @@ async def play_puzzle15(client3, message, about_puzzle15):
         for line in match:
             for cell in line:
                 check_list.append(cell)
-
-        print(check_list)
 
         for i in range(16):
             if check_list[i] == check_complete_list[i]:
