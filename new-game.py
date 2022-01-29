@@ -61,8 +61,8 @@ async def on_message(message):
             if not message.author.bot:
                 await message.channel.send(where_from)
 
-        #if not message.channel.id == 691901316133290035: #ミニゲーム
-        if not message.channel.id == 597978849476870153: #3組
+        if not message.channel.id == 691901316133290035: #ミニゲーム
+        #if not message.channel.id == 597978849476870153: #3組
             return
 
         if message.content.startswith("/ox"):
@@ -347,8 +347,8 @@ async def loop():
     await client3.wait_until_ready()
 
     before_30min = datetime.datetime.now() - datetime.timedelta(minutes=30)
-    #ch = client3.get_channel(691901316133290035) #ミニゲーム
-    ch = client3.get_channel(597978849476870153) #3組
+    ch = client3.get_channel(691901316133290035) #ミニゲーム
+    #ch = client3.get_channel(597978849476870153) #3組
     if len(about_ox) == 3:
         if about_ox[1] <= before_30min:
             member = about_ox[2]
