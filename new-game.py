@@ -261,7 +261,7 @@ async def on_ready():
         ch = client3.get_channel(597978849476870153)
         with open("./version.txt", mode="r", encoding="utf-8") as f:
             version = f.read()
-        await ch.send(f"{client3.user.name}がログインしました(from: {where_from})\nversion: {version}\n本番リリース時on_messageとloopのchを3組からミニゲームに変更")
+        await ch.send(f"{client3.user.name}がログインしました(from: {where_from})\nversion: {version}")
     except:
         unexpected_error()
 
