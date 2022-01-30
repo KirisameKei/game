@@ -397,14 +397,14 @@ async def match_uno(client3, message, about_uno):
 												match = match
 												create_pic_uno(match, player_number)
 												remaining = len(match[player_number])
-												f = discord.File("./uno/WL.png")
+												f = discord.File(f"./uno/{bahuda}.png")
 												await message.channel.send(content=f"{player.name}さんは山札から{hiita_card}を出し{color}に設定しました。残り{remaining}枚", file=f)
 												for p in player_list:
 													if p == player:
 														f = discord.File(f"./uno_player{player_number}.png")
 														await p.send(content=f"{player.name}さんは山札から{hiita_card}を出し{color}に設定しました。残り{remaining}枚", file=f)
 													else:
-														f = discord.File("./uno/WL.png")
+														f = discord.File(f"./uno/{bahuda}.png")
 														await p.send(content=f"{player.name}さんは山札から{hiita_card}を出し{color}に設定しました。残り{remaining}枚", file=f)
 										elif hiita_card == "D4":
 											msg = await player.send("何色にしますか？")
@@ -440,16 +440,16 @@ async def match_uno(client3, message, about_uno):
 													finish = True
 											else:
 												if str(reaction.emoji) == "🟦":
-													bahuda = "BW"
+													bahuda = "BA"
 													color = "青🟦"
 												elif str(reaction.emoji) == "🟩":
-													bahuda = "GW"
+													bahuda = "GA"
 													color = "緑🟩"
 												elif str(reaction.emoji) == "🟥":
-													bahuda = "RW"
+													bahuda = "RA"
 													color = "赤🟥"
 												elif str(reaction.emoji) == "🟨":
-													bahuda = "YW"
+													bahuda = "YA"
 													color = "黄🟨"
 												match[player_number].remove(hiita_card)
 												remaining = len(match[player_number])
@@ -461,7 +461,7 @@ async def match_uno(client3, message, about_uno):
 												create_pic_uno(match, higaisya_number)
 												higaisya = player_list[higaisya_number]
 												higaisya_remaining = len(match[higaisya_number])
-												f = discord.File("./uno/D4.png")
+												f = discord.File(f"./uno/{bahuda}.png")
 												await message.channel.send(
 													content=f"{player.name}さんは山札から{hiita_card}を出し{color}に設定しました。残り{remaining}枚\n{higaisya.name}さんに4ダメージ！！残り{higaisya_remaining}",
 													file=f
@@ -480,7 +480,7 @@ async def match_uno(client3, message, about_uno):
 															file=f
 														)
 													else:
-														f = discord.File("./uno/D4.png")
+														f = discord.File(f"./uno/{bahuda}.png")
 														await p.send(
 															content=f"{player.name}さんは山札から{hiita_card}を出し{color}に設定しました。残り{remaining}枚\n{higaisya.name}さんに4ダメージ！！残り{higaisya_remaining}",
 															file=f
@@ -646,7 +646,7 @@ async def match_uno(client3, message, about_uno):
 								remaining = len(match[player_number])
 								if isinstance(match[player_number][0], int):
 									remaining = 0
-								f = discord.File("./uno/WL.png")
+								f = discord.File(f"./uno/{bahuda}.png")
 								await message.channel.send(content=f"{player.name}さんは{content}を出し{color}に設定しました。残り{remaining}枚", file=f)
 								for p in player_list:
 									if p == player:
@@ -656,7 +656,7 @@ async def match_uno(client3, message, about_uno):
 											f = discord.File(f"./uno_player{player_number}.png")
 											await p.send(content=f"{player.name}さんは{content}を出し{color}に設定しました。残り{remaining}枚", file=f)
 									else:
-										f = discord.File("./uno/WL.png")
+										f = discord.File(f"./uno/{bahuda}.png")
 										await p.send(content=f"{player.name}さんは{content}を出し{color}に設定しました。残り{remaining}枚", file=f)
 
 						elif content == "D4":
@@ -693,16 +693,16 @@ async def match_uno(client3, message, about_uno):
 									finish = True
 							else:
 								if str(reaction.emoji) == "🟦":
-									bahuda = "BW"
+									bahuda = "BA"
 									color = "青🟦"
 								elif str(reaction.emoji) == "🟩":
-									bahuda = "GW"
+									bahuda = "GA"
 									color = "緑🟩"
 								elif str(reaction.emoji) == "🟥":
-									bahuda = "RW"
+									bahuda = "RA"
 									color = "赤🟥"
 								elif str(reaction.emoji) == "🟨":
-									bahuda = "YW"
+									bahuda = "YA"
 									color = "黄🟨"
 								match[player_number].remove(content)
 								match, finish = check_finish(match, player, player_list, player_number)
@@ -717,7 +717,7 @@ async def match_uno(client3, message, about_uno):
 								create_pic_uno(match, higaisya_number)
 								higaisya = player_list[higaisya_number]
 								higaisya_remaining = len(match[higaisya_number])
-								f = discord.File("./uno/D4.png")
+								f = discord.File(f"./uno/{bahuda}.png")
 								await message.channel.send(
 									content=f"{player.name}さんは{content}を出し{color}に設定しました。残り{remaining}枚\n{higaisya.name}さんに4ダメージ！！残り{higaisya_remaining}",
 									file=f
@@ -739,7 +739,7 @@ async def match_uno(client3, message, about_uno):
 											file=f
 										)
 									else:
-										f = discord.File("./uno/D4.png")
+										f = discord.File(f"./uno/{bahuda}.png")
 										await p.send(
 											content=f"{player.name}さんは{content}を出し{color}に設定しました。残り{remaining}枚\n{higaisya.name}さんに4ダメージ！！残り{higaisya_remaining}",
 											file=f
