@@ -104,7 +104,7 @@ async def match_othello(client3, message, about_othello):
                     try:
                         reply = await client3.wait_for("message", check=msg_check, timeout=10)
                     except asyncio.TimeoutError:
-                        next_index = (i+1)%2
+                        next_index = (n+1)%2
                         await message.channel.send(f"タイムアウト！{player_list[next_index]}の勝ち！")
                         timeout = True
                         break
