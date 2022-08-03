@@ -47,6 +47,8 @@ async def match_othello(client3, message, about_othello):
     #    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     #]
 
+    test_list = []
+
     size = about_othello[0]
     match = []
     for i in range(size+2):
@@ -79,7 +81,9 @@ async def match_othello(client3, message, about_othello):
 
     timeout = False
     #series_pass = False
-    for n in range(size**2):
+    #for n in range(size**2):
+    n = 0
+    while True:
         index = n % 2
         teban_member = player_list[index]
         create_pic_othello(match, size)
@@ -92,6 +96,8 @@ async def match_othello(client3, message, about_othello):
                 if cell == 3:
                     is_exist_can_put_place = True
                     break
+            if is_exist_can_put_place:
+                break
 
         if is_exist_can_put_place: #置ける場所があるなら
             series_pass = False
@@ -124,7 +130,7 @@ async def match_othello(client3, message, about_othello):
                             place = match[x][y]
                             if not place == 3:
                                 await message.channel.send("そこは置けません")
-                            else:
+                            else: #place == 3
                                 break
 
             if timeout:
@@ -210,6 +216,8 @@ async def match_othello(client3, message, about_othello):
                 if cell == 0 or cell == 3:
                     finish = False
                     break
+            if not finish:
+                break
 
         if finish:
             create_pic_othello(match, size)
@@ -228,6 +236,8 @@ async def match_othello(client3, message, about_othello):
             )
             await message.channel.send(msg, file=f)
             break
+
+        n += 1
 
 #0 -> 2, 1 -> 1 = 2 - index
 #0 -> 1, 1 -> 2 = index + 1

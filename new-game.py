@@ -61,8 +61,8 @@ async def on_message(message):
             if not message.author.bot:
                 await message.channel.send(where_from)
 
-        if not message.channel.id == 691901316133290035: #ミニゲーム
-        #if not message.channel.id == 597978849476870153: #3組
+        #if not message.channel.id == 691901316133290035: #ミニゲーム
+        if not message.channel.id == 597978849476870153: #3組
             return
 
         if message.content.startswith("/ox"):
@@ -121,7 +121,7 @@ async def start_ox(message):
         about_ox.append(size)
         about_ox.append(datetime.datetime.now())
         about_ox.append(message.author)
-        await message.channel.send("他の参加者を待っています・・・")
+        await message.channel.send("他の参加者を待っています・・・\n他の参加者: `/ox`で参加")
 
 
 async def start_othello(message):
@@ -160,7 +160,7 @@ async def start_othello(message):
         about_othello.append(size)
         about_othello.append(datetime.datetime.now())
         about_othello.append(message.author)
-        await message.channel.send("他の参加者を待っています・・・")
+        await message.channel.send("他の参加者を待っています・・・\n他の参加者: `/othello`で参加")
 
 
 async def start_syogi(message):
@@ -180,7 +180,7 @@ async def start_syogi(message):
     else: #募集をかける立場なら
         about_syogi.append(datetime.datetime.now())
         about_syogi.append(message.author)
-        await message.channel.send("他の参加者を待っています・・・")
+        await message.channel.send("他の参加者を待っています・・・\n他の参加者: `/syogi`で参加")
 
 
 async def start_uno(message):
