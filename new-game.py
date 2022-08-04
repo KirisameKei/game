@@ -61,8 +61,8 @@ async def on_message(message):
             if not message.author.bot:
                 await message.channel.send(where_from)
 
-        #if not message.channel.id == 691901316133290035: #ミニゲーム
-        if not message.channel.id == 597978849476870153: #3組
+        if not message.channel.id == 691901316133290035: #ミニゲーム
+        #if not message.channel.id == 597978849476870153: #3組
             return
 
         if message.content.startswith("/ox"):
