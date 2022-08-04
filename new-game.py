@@ -262,6 +262,7 @@ async def on_ready():
         with open("./version.txt", mode="r", encoding="utf-8") as f:
             version = f.read()
         await ch.send(f"{client3.user.name}がログインしました(from: {where_from})\nversion: {version}")
+        pass
     except:
         unexpected_error()
 
