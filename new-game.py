@@ -258,11 +258,11 @@ async def cancel(message):
 @client3.event
 async def on_ready():
     try:
-        ch = client3.get_channel(597978849476870153)
+        login_notice_ch = client3.get_channel(597978849476870153)
         with open("./version.txt", mode="r", encoding="utf-8") as f:
             version = f.read()
-        await ch.send(f"{client3.user.name}がログインしました(from: {where_from})\nversion: {version}")
-        pass
+        await login_notice_ch.send(f"{client3.user.name}がログインしました(from: {where_from})\n{os.path.basename(__file__)}により起動\nversion: {version}")
+
     except:
         unexpected_error()
 
