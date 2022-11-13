@@ -36,7 +36,6 @@ async def play_puzzle15(client3, message, about_puzzle15):
         [4, 8, 12, 0]
     ]
 
-    check_list = []
     check_complete_list = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 0]
     change_counter = 0
     while True:
@@ -52,6 +51,7 @@ async def play_puzzle15(client3, message, about_puzzle15):
             match.append(line)
 
         #チェック用のリストにぶち込む
+        check_list = []
         for line in match:
             for cell in line:
                 check_list.append(cell)
