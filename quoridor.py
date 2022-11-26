@@ -158,7 +158,7 @@ async def match_quoridor(client3, message, about_quoridor):
 
         while True:
             try:
-                reply = await client3.wait_for("message", check=msg_check, timeout=50)
+                reply = await client3.wait_for("message", check=msg_check, timeout=60)
             except asyncio.TimeoutError:
                 await message.channel.send("残り10秒")
                 try:
