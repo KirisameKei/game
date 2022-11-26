@@ -11,6 +11,7 @@ from discord.ext import tasks
 import othello
 import ox
 import puzzle15
+import quoridor
 import syogi
 import uno
 
@@ -24,6 +25,7 @@ about_ox = [] #[int, datetime.datetime, discord.Member, discord.Member]
 about_othello = [] #[int, datetime.datetime, discord.Member, discord.Member]
 about_syogi = [] #[datetime.datetime, discord.Member, discord.Member]
 about_uno = [] #[datetime.datetime, discord.Message, bool, discord.Member × n]
+about_quoridor = [] #[datetime.datetime, discord.Member, discord.Member]
 about_puzzle15 = [] #[discord.Member]
 
 def unexpected_error():
@@ -73,6 +75,8 @@ async def on_message(message):
             await start_syogi(message)
         elif message.content == "/uno":
             await start_uno(message)
+        elif message.content == "/quoridor":
+            await start_quoridor(message)
         elif message.content == "/puzzle15":
             await start_puzzle15(message)
         elif message.content == "/cancel":
@@ -83,7 +87,7 @@ async def on_message(message):
 
 
 def can_you_start_game(message):
-    if message.author in about_ox or message.author in about_othello or message.author in about_syogi or message.author in about_puzzle15 or message.author in about_uno:
+    if message.author in about_ox or message.author in about_othello or message.author in about_syogi or message.author in about_uno or message.author in about_quoridor or message.author in about_puzzle15:
         return False
     else:
         return True
@@ -213,6 +217,26 @@ async def start_uno(message):
         return
 
 
+async def start_quoridor(message):
+    if len(about_quoridor) == 3: #他にプレイしている人がいたら
+        await message.channel.send("現在プレイ中です。しばらくお待ちください。")
+        return
+
+    if not can_you_start_game(message):
+        await message.channel.send("あなたは別のゲームに参加しているか既に参加しているため参加できません")
+        return
+
+    if len(about_quoridor) == 2: #先に募集している人がいたら
+        about_quoridor.append(message.author)
+        await message.channel.send("勝負を開始します！")
+        await quoridor.match_quoridor(client3, message, about_quoridor)
+
+    else: #募集をかける立場なら
+        about_quoridor.append(datetime.datetime.now())
+        about_quoridor.append(message.author)
+        await message.channel.send("他の参加者を待っています・・・\n他の参加者: `/quoridor`で参加")
+
+
 async def start_puzzle15(message):
     if not can_you_start_game(message):
         await message.channel.send("あなたは別のゲームに参加しているか既に参加しているため参加できません")
@@ -249,6 +273,14 @@ async def cancel(message):
             return
         else:
             about_syogi.clear()
+            await message.channel.send("募集をキャンセルしました")
+
+    elif message.author in about_quoridor:
+        if len(about_quoridor) == 4: #勝負中なら
+            await message.channel.send("勝負中は抜けられません")
+            return
+        else:
+            about_quoridor.clear()
             await message.channel.send("募集をキャンセルしました")
 
     else:
@@ -372,6 +404,12 @@ async def loop():
         if about_uno[0] <= before_30min:
             about_uno.clear()
             await ch.send("30分間参加がなかったので募集は取り消されました")
+
+    if len(about_quoridor) == 2:
+        if about_quoridor[0] <= before_30min:
+            member = about_quoridor[1]
+            about_quoridor.clear()
+            await ch.send(f"{member.mention}\n30分間参加がなかったので募集は取り消されました")
 
 loop.start()
 
