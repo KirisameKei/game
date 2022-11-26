@@ -72,6 +72,8 @@ def create_pic_quoridor(match, index, player_list):
     gote_ita = match[18]
     sente = player_list[0]
     gote = player_list[1]
+    sente_color = 0xff55ff
+    gote_color = 0x00e0ae
     if index == 0:
         for y in range(9):
             moji.text((y*50+67, 50), text=f"{y+1}", font=font, fill=0x000000) #実際は横軸を描くが都合がいいのでyを使う
@@ -84,10 +86,10 @@ def create_pic_quoridor(match, index, player_list):
 
         moji.text((50, 558), text=f"{sente.display_name}", font=font, fill=0x000000)
         moji.text((150, 8), text=f"{gote.display_name}", font=font, fill=0x000000)
-        moji.rectangle((410, 555, 490, 595), fill=0x0000ff)
-        moji.rectangle((60, 5, 140, 45), fill=0xff0000)
-        moji.text((433, 558), text=f"{sente_ita}", font=font, fill=0xffffff)
-        moji.text((83, 8), f"{gote_ita}", font=font, fill=0xffffff)
+        moji.rectangle((410, 555, 490, 595), fill=sente_color)
+        moji.rectangle((60, 5, 140, 45), fill=gote_color)
+        moji.text((433, 558), text=f"{sente_ita}", font=font, fill=0x000000)
+        moji.text((83, 8), f"{gote_ita}", font=font, fill=0x000000)
 
     else:
         for y in range(9):
@@ -100,10 +102,10 @@ def create_pic_quoridor(match, index, player_list):
                 moji.text((x*50+59, y*50+109), text=f"{9-x}{9-y}", font=font, fill=0x000000)
         moji.text((50, 558), text=gote.display_name, font=font, fill=0x000000)
         moji.text((150, 8), text=sente.display_name, font=font, fill=0x000000)
-        moji.rectangle((410, 555, 490, 595), fill=0xff0000)
-        moji.rectangle((60, 5, 140, 45), fill=0x0000ff)
-        moji.text((433, 558), text=f"{gote_ita}", font=font, fill=0xffffff)
-        moji.text((83, 8), f"{sente_ita}", font=font, fill=0xffffff)
+        moji.rectangle((410, 555, 490, 595), fill=gote_color)
+        moji.rectangle((60, 5, 140, 45), fill=sente_color)
+        moji.text((433, 558), text=f"{gote_ita}", font=font, fill=0x000000)
+        moji.text((83, 8), f"{sente_ita}", font=font, fill=0x000000)
 
     background.save("quoridor.png")
 
