@@ -120,7 +120,7 @@ async def match_quoridor(client3, message, about_quoridor):
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -307,13 +307,12 @@ async def match_quoridor(client3, message, about_quoridor):
                     if aite_y >= 4:
                         if match[aite_y-3][aite_x] == 0: #自分の駒の上方向に壁が無ければ
                             match[aite_y-4][aite_x] = 3
-                        else:
-                            if aite_x - 2 >= 0:
-                                if match[aite_y-2][aite_x-1] == 0:
-                                    match[aite_y-2][aite_x-2] = 3
-                            if aite_x + 2 <= 16:
-                                if match[aite_y-2][aite_x+1] == 0:
-                                    match[aite_y-2][aite_x+2] = 3
+                        if aite_x - 2 >= 0:
+                            if match[aite_y-2][aite_x-1] == 0:
+                                match[aite_y-2][aite_x-2] = 3
+                        if aite_x + 2 <= 16:
+                            if match[aite_y-2][aite_x+1] == 0:
+                                match[aite_y-2][aite_x+2] = 3
 
         if aite_y <= 14:
             if match[aite_y+1][aite_x] == 0: #下方向に壁が無ければ
@@ -323,13 +322,12 @@ async def match_quoridor(client3, message, about_quoridor):
                     if aite_y <= 12:
                         if match[aite_y+3][aite_x] == 0: #相手の駒の下方向に壁が無ければ
                             match[aite_y+4][aite_x] = 3
-                        else:
-                            if aite_x - 2 >= 0:
-                                if match[aite_y+2][aite_x-1] == 0:
-                                    match[aite_y+2][aite_x-2] = 3
-                            if aite_x + 2 <= 16:
-                                if match[aite_y+2][aite_x+1] == 0:
-                                    match[aite_y+2][aite_x+2] = 3
+                        if aite_x - 2 >= 0:
+                            if match[aite_y+2][aite_x-1] == 0:
+                                match[aite_y+2][aite_x-2] = 3
+                        if aite_x + 2 <= 16:
+                            if match[aite_y+2][aite_x+1] == 0:
+                                match[aite_y+2][aite_x+2] = 3
 
         if aite_x >= 2:
             if match[aite_y][aite_x-1] == 0: #左方向に壁が無ければ
@@ -339,13 +337,12 @@ async def match_quoridor(client3, message, about_quoridor):
                     if aite_x >= 4:
                         if match[aite_y][aite_x-3] == 0: #自分の駒の左方向に壁が無ければ
                             match[aite_y][aite_x-4] = 3
-                        else:
-                            if aite_y - 2 >= 0:
-                                if match[aite_y-1][aite_x-2] == 0:
-                                    match[aite_y-2][aite_x-2] = 3
-                            if aite_y + 2 <= 16:
-                                if match[aite_y+1][aite_x-2] == 0:
-                                    match[aite_y+2][aite_x-2] = 3
+                        if aite_y - 2 >= 0:
+                            if match[aite_y-1][aite_x-2] == 0:
+                                match[aite_y-2][aite_x-2] = 3
+                        if aite_y + 2 <= 16:
+                            if match[aite_y+1][aite_x-2] == 0:
+                                match[aite_y+2][aite_x-2] = 3
 
         if aite_x <= 14:
             if match[aite_y][aite_x+1] == 0: #右方向に壁が無ければ
@@ -355,13 +352,12 @@ async def match_quoridor(client3, message, about_quoridor):
                     if aite_x >= 4:
                         if match[aite_y][aite_x+3] == 0: #自分の駒の右方向に壁が無ければ
                             match[aite_y][aite_x+4] = 3
-                        else:
-                            if aite_y - 2 >= 0:
-                                if match[aite_y-1][aite_x+2] == 0:
-                                    match[aite_y-2][aite_x+2] = 3
-                            if aite_y + 2 <= 16:
-                                if match[aite_y+1][aite_x+2] == 0:
-                                    match[aite_y+2][aite_x+2] = 3
+                        if aite_y - 2 >= 0:
+                            if match[aite_y-1][aite_x+2] == 0:
+                                match[aite_y-2][aite_x+2] = 3
+                        if aite_y + 2 <= 16:
+                            if match[aite_y+1][aite_x+2] == 0:
+                                match[aite_y+2][aite_x+2] = 3
 
         n += 1
 
