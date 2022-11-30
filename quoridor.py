@@ -1,4 +1,5 @@
 import asyncio
+import copy
 import random
 
 import discord
@@ -120,7 +121,7 @@ async def match_quoridor(client3, message, about_quoridor):
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -258,8 +259,60 @@ async def match_quoridor(client3, message, about_quoridor):
                         cannot_go_next = True
 
             if not cannot_go_next:
-                #いずれゴール不可能な壁の設置を弾くようにする
-                pass
+                if operate != "move":
+                    for i in range(9):
+                        for j in range(9):
+                            if match[i*2][j*2] == 2 - index:
+                                aite_y = i * 2
+                                aite_x = j * 2
+                                break
+
+                    judge_can_goal_match = copy.deepcopy(match)
+                    judge_can_goal_match[aite_y][aite_x] = 4
+                    if operate == "put_row":
+                        for i in range(3):
+                            judge_can_goal_match[row][col_1+i] = index + 1
+                    elif operate == "put_col":
+                        for i in range(3):
+                            judge_can_goal_match[row_1+i][col] = index + 1
+                    can_go_masu_counter_sum = 0
+                    while True:
+                        can_go_masu_counter = 0
+                        for i in range(9):
+                            for j in range(9):
+                                flag = False
+                                if j >= 1:
+                                    if judge_can_goal_match[i*2][j*2-1] == 0 and judge_can_goal_match[i*2][j*2-2] == 4:
+                                        flag = True
+                                if j <= 7:
+                                    if judge_can_goal_match[i*2][j*2+1] == 0 and judge_can_goal_match[i*2][j*2+2] == 4:
+                                        flag = True
+                                if i >= 1:
+                                    if judge_can_goal_match[i*2-1][j*2] == 0 and judge_can_goal_match[i*2-2][j*2] == 4:
+                                        flag = True
+                                if i <= 7:
+                                    if judge_can_goal_match[i*2+1][j*2] == 0 and judge_can_goal_match[i*2+2][j*2] == 4:
+                                        flag = True
+                                if flag:
+                                    judge_can_goal_match[i*2][j*2] = 4
+                                    can_go_masu_counter += 1
+
+                        if can_go_masu_counter_sum == can_go_masu_counter:
+                            break
+                        else:
+                            can_go_masu_counter_sum = can_go_masu_counter
+
+                    flag = False
+                    if index == 0:
+                        if 4 in judge_can_goal_match[16]:
+                            flag = True
+                    else:
+                        if 4 in judge_can_goal_match[0]:
+                            flag = True
+
+                    if not flag:
+                        await message.channel.send("相手がゴールできなくなる壁の設置はできません")
+                        cannot_go_next = True
 
             if not cannot_go_next:
                 break
