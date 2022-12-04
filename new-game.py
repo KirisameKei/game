@@ -66,8 +66,8 @@ async def on_message(message):
             return
 
         if client3.user in message.mentions:
-            if not message.author.bot:
-                await message.channel.send(where_from)
+            fileplace = discord.__file__.replace("\\", "\\\\").replace("_", "\_")
+            await message.channel.send(f"{where_from}\n{os.path.basename(__file__)}\n{discord.__version__}\n{fileplace}")
 
         if not message.channel.id == 691901316133290035: #ミニゲーム
         #if not message.channel.id == 597978849476870153: #3組
